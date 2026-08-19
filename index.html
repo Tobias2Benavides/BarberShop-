@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ali's Kapsalon — Knippen & Scheren, Tilburg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;0,900;1,600&family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: { DEFAULT: '#0B0A08', 50:'#f5f4f2', 100:'#e7e4de', 200:'#c9c2b6', 300:'#a89d8b', 400:'#7a6f5c', 500:'#4a4335', 600:'#332e24', 700:'#242018', 800:'#17140f', 900:'#0B0A08', 950:'#050504' },
+          gold: { DEFAULT:'#D7A301', 50:'#FBF3DC', 100:'#F7E7B3', 200:'#F0D477', 300:'#E8C04B', 400:'#DFB122', 500:'#D7A301', 600:'#B18601', 700:'#8A6A01', 800:'#5F4901', 900:'#382B01' },
+          cream: { DEFAULT:'#F4EEE0', 50:'#FCFAF4', 100:'#F4EEE0', 200:'#E9DEC4' }
+        },
+        fontFamily: {
+          display: ['"Playfair Display"', 'serif'],
+          label: ['"Oswald"', 'sans-serif'],
+          body: ['"Inter"', 'sans-serif'],
+        },
+        boxShadow: {
+          'gold-sm': '0 2px 8px -2px rgba(215,163,1,0.35), 0 1px 2px rgba(0,0,0,0.4)',
+          'gold-lg': '0 20px 50px -12px rgba(215,163,1,0.25), 0 8px 24px -8px rgba(0,0,0,0.5)',
+          'card': '0 1px 2px rgba(0,0,0,0.3), 0 12px 32px -12px rgba(0,0,0,0.55)',
+          'up': '0 -1px 0 rgba(255,255,255,0.06) inset',
+        },
+      }
+    }
+  }
+</script>
+<style>
+  :root { --ease-spring: cubic-bezier(.2,.9,.25,1.2); }
+  html { scroll-behavior: smooth; }
+  body { background-color:#0B0A08; }
+
+  .noise { position:relative; }
+  .noise::before {
+    content:''; position:absolute; inset:0; pointer-events:none; opacity:.05; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .radial-gold { background: radial-gradient(60% 60% at 50% 0%, rgba(215,163,1,0.16), transparent 70%); }
+  .radial-gold-2 { background: radial-gradient(45% 45% at 85% 15%, rgba(215,163,1,0.14), transparent 70%), radial-gradient(40% 40% at 10% 90%, rgba(215,163,1,0.10), transparent 70%); }
+
+  .hairline { background: linear-gradient(90deg, transparent, rgba(215,163,1,0.55), transparent); height:1px; }
+
+  .img-treat { position:relative; overflow:hidden; }
+  .img-treat img { transition: transform .7s var(--ease-spring); }
+  .img-treat:hover img { transform: scale(1.06); }
+  .img-treat::after {
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(to top, rgba(11,10,8,0.75) 0%, rgba(11,10,8,0.15) 45%, rgba(215,163,1,0.10) 100%);
+    mix-blend-mode:multiply; pointer-events:none;
+  }
+  .img-treat::before{
+    content:''; position:absolute; inset:0; z-index:1;
+    background: linear-gradient(to top, rgba(11,10,8,0.85), transparent 60%);
+    pointer-events:none;
+  }
+
+  .btn-primary {
+    transition: transform .35s var(--ease-spring), box-shadow .35s var(--ease-spring), background-color .25s ease;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 32px -10px rgba(215,163,1,0.45); }
+  .btn-primary:active { transform: translateY(0px) scale(.98); }
+
+  .link-underline { position:relative; }
+  .link-underline::after {
+    content:''; position:absolute; left:0; right:100%; bottom:-4px; height:1px; background:#D7A301;
+    transition: right .35s var(--ease-spring);
+  }
+  .link-underline:hover::after { right:0; }
+
+  .card-rise { transition: transform .4s var(--ease-spring), box-shadow .4s var(--ease-spring), border-color .4s ease; }
+  .card-rise:hover { transform: translateY(-6px); box-shadow: 0 24px 48px -16px rgba(0,0,0,0.6), 0 0 0 1px rgba(215,163,1,0.25); }
+
+  .fade-up { opacity:0; transform: translateY(24px); transition: opacity .8s var(--ease-spring), transform .8s var(--ease-spring); }
+  .fade-up.in { opacity:1; transform: translateY(0); }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid #D7A301; outline-offset:3px; border-radius:2px;
+  }
+
+  ::selection { background: #D7A301; color:#0B0A08; }
+
+  .marquee-track { animation: marquee 28s linear infinite; }
+  @keyframes marquee { from { transform: translateX(0);} to { transform: translateX(-50%);} }
+
+  .price-row { position:relative; }
+  .price-row .dots {
+    flex:1; margin:0 .75rem; border-bottom:2px dotted rgba(233,222,196,0.25); transform:translateY(-6px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HairSalon",
+  "name": "Ali's Kapsalon",
+  "image": "images/logo.jpeg",
+  "email": "Ali_emir_kaplan@hotmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Besterdring 49",
+    "postalCode": "5014 HH",
+    "addressLocality": "Tilburg",
+    "addressCountry": "NL"
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    "opens": "09:00",
+    "closes": "18:00"
+  },
+  "sameAs": [
+    "https://www.instagram.com/aliskapsalon/",
+    "https://www.facebook.com/people/Alis-kapsalon/100063524110757/"
+  ]
+}
+</script>
+</head>
+<body class="bg-ink-900 text-cream-100 font-body antialiased selection:bg-gold-500">
+
+<!-- ============ NAV ============ -->
+<header id="top" class="fixed top-0 inset-x-0 z-50">
+  <div class="backdrop-blur-md bg-ink-900/70 border-b border-gold-900/40">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 h-20 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-3 group">
+        <span class="grid place-items-center w-11 h-11 rounded-full border border-gold-500/60 bg-ink-800 shadow-gold-sm group-hover:shadow-gold-lg transition-shadow duration-500 overflow-hidden">
+          <img src="images/logo.jpeg" alt="Ali's Kapsalon logo" class="w-full h-full object-cover">
+        </span>
+        <span class="leading-none">
+          <span class="block font-display text-lg sm:text-xl font-800 tracking-tight text-cream-50">Ali's Kapsalon</span>
+          <span class="block font-label text-[10px] tracking-[0.3em] text-gold-400 uppercase mt-0.5">Tilburg · Sinds jaar en dag</span>
+        </span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-9 font-label text-[13px] tracking-[0.14em] uppercase text-cream-200">
+        <a href="#services" class="link-underline hover:text-gold-300 transition-colors">Diensten</a>
+        <a href="#about" class="link-underline hover:text-gold-300 transition-colors">Over ons</a>
+        <a href="#gallery" class="link-underline hover:text-gold-300 transition-colors">Galerij</a>
+        <a href="#reviews" class="link-underline hover:text-gold-300 transition-colors">Reviews</a>
+        <a href="#visit" class="link-underline hover:text-gold-300 transition-colors">Bezoek</a>
+      </nav>
+
+      <a href="#visit" class="btn-primary hidden sm:inline-flex items-center gap-2 bg-gold-500 text-ink-900 font-label text-[13px] tracking-[0.12em] uppercase font-semibold px-5 py-2.5 rounded-full shadow-gold-sm hover:bg-gold-400">
+        Reserveer een Stoel
+      </a>
+
+      <button id="menuBtn" class="lg:hidden text-cream-100 p-2 -mr-2" aria-label="Menu openen" aria-expanded="false">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- mobile menu -->
+  <div id="mobileMenu" class="lg:hidden hidden bg-ink-900/98 backdrop-blur-md border-b border-gold-900/40">
+    <div class="px-6 py-6 flex flex-col gap-5 font-label text-sm tracking-[0.14em] uppercase">
+      <a href="#services" class="mobile-link text-cream-100">Diensten</a>
+      <a href="#about" class="mobile-link text-cream-100">Over ons</a>
+      <a href="#gallery" class="mobile-link text-cream-100">Galerij</a>
+      <a href="#reviews" class="mobile-link text-cream-100">Reviews</a>
+      <a href="#visit" class="mobile-link text-cream-100">Bezoek</a>
+      <a href="#visit" class="mt-2 text-center bg-gold-500 text-ink-900 font-semibold px-5 py-3 rounded-full">Reserveer een Stoel</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="relative min-h-[100svh] flex items-center overflow-hidden noise radial-gold pt-28 pb-20">
+  <div class="absolute -top-24 -right-24 w-[520px] h-[520px] rounded-full bg-gold-500/10 blur-3xl"></div>
+  <div class="absolute -bottom-32 -left-24 w-[420px] h-[420px] rounded-full bg-gold-500/10 blur-3xl"></div>
+
+  <div class="relative max-w-7xl mx-auto px-5 sm:px-8 w-full grid grid-cols-1 lg:grid-cols-[1.15fr_.85fr] gap-14 items-center">
+    <div class="fade-up">
+      <div class="inline-flex items-center gap-2 border border-gold-500/40 rounded-full pl-1.5 pr-4 py-1.5 mb-8 bg-ink-800/60">
+        <span class="w-6 h-6 rounded-full bg-gold-500 grid place-items-center">
+          <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 text-ink-900" fill="currentColor"><path d="M12 2l2.4 6.9L21 11l-6.6 2.1L12 20l-2.4-6.9L3 11l6.6-2.1L12 2z"/></svg>
+        </span>
+        <span class="font-label text-[11px] tracking-[0.25em] uppercase text-gold-200">Knippen &amp; Scheren · Tilburg</span>
+      </div>
+
+      <h1 class="font-display font-900 text-[13vw] leading-[0.92] sm:text-6xl md:text-7xl lg:text-[5.5rem] tracking-tight text-cream-50">
+        Scherpe kapsels,<br>
+        <span class="italic text-gold-400">eerlijke</span> service.
+      </h1>
+
+      <p class="mt-7 max-w-md text-cream-200/80 text-base sm:text-lg leading-relaxed">
+        Ali's Kapsalon is de buurtkapper van Tilburg — precieze fades, klassiek scheren
+        en een hot towel-afwerking. Geen haast, geen poespas, gewoon vakwerk van stoel tot stoel.
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <a href="#visit" class="btn-primary inline-flex items-center gap-2 bg-gold-500 text-ink-900 font-label font-semibold text-sm tracking-[0.1em] uppercase px-7 py-4 rounded-full shadow-gold-lg hover:bg-gold-400">
+          Maak een Afspraak
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#services" class="btn-primary inline-flex items-center gap-2 border border-cream-100/25 text-cream-50 font-label font-medium text-sm tracking-[0.1em] uppercase px-7 py-4 rounded-full hover:border-gold-400 hover:text-gold-300">
+          Bekijk Prijzen
+        </a>
+      </div>
+
+      <div class="mt-14 flex items-center gap-8 text-cream-200/70">
+        <div>
+          <div class="font-display text-3xl text-gold-400 font-700">4.8<span class="text-lg align-top">★</span></div>
+          <div class="font-label text-[11px] tracking-[0.14em] uppercase mt-1">Google Beoordeling</div>
+        </div>
+        <div class="w-px h-10 bg-cream-100/15"></div>
+        <div>
+          <div class="font-display text-3xl text-gold-400 font-700">12+</div>
+          <div class="font-label text-[11px] tracking-[0.14em] uppercase mt-1">Jaar Ervaring</div>
+        </div>
+        <div class="w-px h-10 bg-cream-100/15"></div>
+        <div>
+          <div class="font-display text-3xl text-gold-400 font-700">Inlopers</div>
+          <div class="font-label text-[11px] tracking-[0.14em] uppercase mt-1">Altijd Welkom</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fade-up relative hidden lg:block" style="transition-delay:.15s">
+      <div class="relative rounded-[2rem] overflow-hidden shadow-card border border-gold-500/15 img-treat aspect-[4/5]">
+        <img src="images/gallery-1.jpeg" alt="Verse fade bij Ali's Kapsalon" class="w-full h-full object-cover">
+      </div>
+      <div class="absolute -bottom-8 -left-10 bg-ink-800 border border-gold-500/25 rounded-2xl p-5 shadow-gold-lg w-56">
+        <div class="flex -space-x-3 mb-3">
+          <img src="https://placehold.co/64x64/D7A301/0B0A08?text=%E2%9C%82" class="w-9 h-9 rounded-full border-2 border-ink-800">
+          <img src="https://placehold.co/64x64/8A6A01/F4EEE0?text=%E2%9C%82" class="w-9 h-9 rounded-full border-2 border-ink-800">
+          <img src="https://placehold.co/64x64/17140f/D7A301?text=%E2%9C%82" class="w-9 h-9 rounded-full border-2 border-ink-800">
+        </div>
+        <p class="font-label text-[11px] tracking-[0.1em] uppercase text-cream-200/80">Vakbarbiers op elke stoel</p>
+      </div>
+    </div>
+  </div>
+
+  <a href="#services" class="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 text-cream-200/50 hover:text-gold-300 transition-colors">
+    <span class="font-label text-[10px] tracking-[0.3em] uppercase">Scroll</span>
+    <span class="w-px h-10 bg-gradient-to-b from-gold-400 to-transparent"></span>
+  </a>
+</section>
+
+<!-- ============ MARQUEE STRIP ============ -->
+<div class="relative bg-gold-500 py-3.5 overflow-hidden -rotate-1 scale-105 shadow-gold-lg">
+  <div class="flex whitespace-nowrap marquee-track w-max">
+    <div class="flex items-center gap-6 pr-6">
+      <span class="font-label font-semibold text-sm tracking-[0.2em] uppercase text-ink-900">Fades</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-ink-900/60"></span>
+      <span class="font-label font-semibold text-sm tracking-[0.2em] uppercase text-ink-900">Scheren met Open Mes</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-ink-900/60"></span>
+      <span class="font-label font-semibold text-sm tracking-[0.2em] uppercase text-ink-900">Baard Bijwerken</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-ink-900/60"></span>
+      <span class="font-label font-semibold text-sm tracking-[0.2em] uppercase text-ink-900">Hot Towel-Afwerking</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-ink-900/60"></span>
+      <span class="font-label font-semibold text-sm tracking-[0.2em] uppercase text-ink-900">Kinderkapsels</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-ink-900/60"></span>
+      <span class="font-label font-semibold text-sm tracking-[0.2em] uppercase text-ink-900">Inlopers Welkom</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-ink-900/60"></span>
+    </div>
+    <div class="flex items-center gap-6 pr-6" aria-hidden="true">
+      <span class="font-label font-semibold text-sm tracking-[0.2em] uppercase text-ink-900">Fades</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-ink-900/60"></span>
+      <span class="font-label font-semibold text-sm tracking-[0.2em] uppercase text-ink-900">Scheren met Open Mes</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-ink-900/60"></span>
+      <span class="font-label font-semibold text-sm tracking-[0.2em] uppercase text-ink-900">Baard Bijwerken</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-ink-900/60"></span>
+      <span class="font-label font-semibold text-sm tracking-[0.2em] uppercase text-ink-900">Hot Towel-Afwerking</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-ink-900/60"></span>
+      <span class="font-label font-semibold text-sm tracking-[0.2em] uppercase text-ink-900">Kinderkapsels</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-ink-900/60"></span>
+      <span class="font-label font-semibold text-sm tracking-[0.2em] uppercase text-ink-900">Inlopers Welkom</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-ink-900/60"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="relative py-28 sm:py-36 noise">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <div class="fade-up relative order-2 lg:order-1">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="rounded-2xl overflow-hidden img-treat aspect-[3/4] mt-10 border border-gold-500/10 shadow-card">
+          <img src="images/gallery-2.jpeg" class="w-full h-full object-cover" alt="Klassieke scheiding met scherpe lijnen">
+        </div>
+        <div class="rounded-2xl overflow-hidden img-treat aspect-[3/4] border border-gold-500/10 shadow-card">
+          <img src="images/gallery-4.jpeg" class="w-full h-full object-cover" alt="Strakke fade met verzorgde baard">
+        </div>
+      </div>
+      <div class="absolute inset-0 -z-10 radial-gold-2"></div>
+    </div>
+
+    <div class="fade-up order-1 lg:order-2">
+      <span class="font-label text-[11px] tracking-[0.3em] uppercase text-gold-400">Ons Verhaal</span>
+      <h2 class="font-display font-800 text-4xl sm:text-5xl mt-4 leading-[1.05] text-cream-50">
+        Eén stoel in de buurt,<br class="hidden sm:block"> een écht vak.
+      </h2>
+      <div class="hairline w-24 my-7"></div>
+      <p class="text-cream-200/80 leading-relaxed text-base sm:text-lg">
+        Wat begon als één stoel aan de Besterdring is uitgegroeid tot dé vaste plek van Tilburg
+        voor scherpe fades, tapers en ouderwets scheren. We doen het nog steeds rustig aan —
+        lijnen met het open scheermes, hot towels en een goed gesprek voor elke knipbeurt.
+      </p>
+      <p class="mt-5 text-cream-200/80 leading-relaxed text-base sm:text-lg">
+        Elke barbier bij ons heeft het vak in de praktijk geleerd, stoel voor stoel. Geen
+        haastwerk, geen kapsels van tien minuten — gewoon vakmanschap dat je voelt als je
+        er met je hand doorheen gaat.
+      </p>
+
+      <div class="mt-10 grid grid-cols-3 gap-6">
+        <div>
+          <svg class="w-7 h-7 text-gold-400 mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2l2.4 6.9L21 11l-6.6 2.1L12 20l-2.4-6.9L3 11l6.6-2.1L12 2z"/></svg>
+          <p class="font-label text-[11px] tracking-[0.1em] uppercase text-cream-200/70">Premium<br>Producten</p>
+        </div>
+        <div>
+          <svg class="w-7 h-7 text-gold-400 mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3M12 21a9 9 0 100-18 9 9 0 000 18z"/></svg>
+          <p class="font-label text-[11px] tracking-[0.1em] uppercase text-cream-200/70">Altijd op<br>Tijd</p>
+        </div>
+        <div>
+          <svg class="w-7 h-7 text-gold-400 mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.8 4.6c-1.6-1.6-4.2-1.6-5.8 0L12 7.6 9 4.6c-1.6-1.6-4.2-1.6-5.8 0-1.6 1.6-1.6 4.2 0 5.8l8.8 8.8 8.8-8.8c1.6-1.6 1.6-4.2 0-5.8z"/></svg>
+          <p class="font-label text-[11px] tracking-[0.1em] uppercase text-cream-200/70">Geliefd bij<br>Vaste Klanten</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES / PRICES ============ -->
+<section id="services" class="relative py-28 sm:py-36 bg-ink-800/60 border-y border-gold-900/30 noise">
+  <div class="max-w-5xl mx-auto px-5 sm:px-8">
+    <div class="text-center fade-up">
+      <span class="font-label text-[11px] tracking-[0.3em] uppercase text-gold-400">Prijslijst</span>
+      <h2 class="font-display font-800 text-4xl sm:text-5xl mt-4 text-cream-50">Diensten &amp; Prijzen</h2>
+      <p class="mt-4 text-cream-200/70 max-w-xl mx-auto">Duidelijke prijzen, geen verrassingen in de stoel. Elke dienst wordt afgewerkt met een nette haarlijn en styling.</p>
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
+      <div class="fade-up card-rise rounded-2xl border border-gold-500/15 bg-ink-900/50 p-7">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-display text-2xl font-700 text-cream-50">Knippen</h3>
+            <p class="font-label text-[11px] tracking-[0.1em] uppercase text-cream-200/50 mt-1">Onze Signature Knipbeurt</p>
+          </div>
+          <span class="font-display text-3xl font-700 text-gold-400 whitespace-nowrap">€25<span class="text-base align-top">.00</span></span>
+        </div>
+        <p class="mt-4 text-sm text-cream-200/70 leading-relaxed">Precisieknipbeurt afgestemd op uw gezichtsvorm — schaar- en tondeusewerk, afgewerkt met styling.</p>
+      </div>
+
+      <div class="fade-up card-rise rounded-2xl border border-gold-500/15 bg-ink-900/50 p-7" style="transition-delay:.08s">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-display text-2xl font-700 text-cream-50">Knippen + Wassen</h3>
+            <p class="font-label text-[11px] tracking-[0.1em] uppercase text-cream-200/50 mt-1">Knipbeurt + Wassen</p>
+          </div>
+          <span class="font-display text-3xl font-700 text-gold-400 whitespace-nowrap">€30<span class="text-base align-top">.00</span></span>
+        </div>
+        <p class="mt-4 text-sm text-cream-200/70 leading-relaxed">Onze signature knipbeurt voorafgegaan door een ontspannende wasbeurt en hoofdhuidmassage.</p>
+      </div>
+
+      <div class="fade-up card-rise rounded-2xl border border-gold-500/15 bg-ink-900/50 p-7" style="transition-delay:.16s">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-display text-2xl font-700 text-cream-50">Knippen + Baard</h3>
+            <p class="font-label text-[11px] tracking-[0.1em] uppercase text-cream-200/50 mt-1">Knipbeurt + Baard</p>
+          </div>
+          <span class="font-display text-3xl font-700 text-gold-400 whitespace-nowrap">€30<span class="text-base align-top">.00</span></span>
+        </div>
+        <p class="mt-4 text-sm text-cream-200/70 leading-relaxed">Knipbeurt gecombineerd met een messcherpe baardcorrectie en hot towel-afwerking.</p>
+      </div>
+
+      <div class="fade-up card-rise rounded-2xl border border-gold-500/15 bg-ink-900/50 p-7" style="transition-delay:.24s">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-display text-2xl font-700 text-cream-50">Knippen + Epileren</h3>
+            <p class="font-label text-[11px] tracking-[0.1em] uppercase text-cream-200/50 mt-1">Knipbeurt + Wenkbrauwen Epileren</p>
+          </div>
+          <span class="font-display text-3xl font-700 text-gold-400 whitespace-nowrap">€27<span class="text-base align-top">.50</span></span>
+        </div>
+        <p class="mt-4 text-sm text-cream-200/70 leading-relaxed">Signature knipbeurt afgewerkt met nette wenkbrauwepilatie voor een scherpere look.</p>
+      </div>
+    </div>
+
+    <div class="mt-14 text-center fade-up">
+      <a href="#visit" class="btn-primary inline-flex items-center gap-2 bg-gold-500 text-ink-900 font-label font-semibold text-sm tracking-[0.1em] uppercase px-8 py-4 rounded-full shadow-gold-lg hover:bg-gold-400">
+        Reserveer Uw Stoel
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section id="gallery" class="relative py-28 sm:py-36 noise">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="flex flex-wrap items-end justify-between gap-6 fade-up">
+      <div>
+        <span class="font-label text-[11px] tracking-[0.3em] uppercase text-gold-400">De Zaak</span>
+        <h2 class="font-display font-800 text-4xl sm:text-5xl mt-4 text-cream-50">Verse Kapsels, Elke Hoek</h2>
+      </div>
+      <a href="https://www.instagram.com/aliskapsalon/" target="_blank" rel="noopener" class="link-underline font-label text-[13px] tracking-[0.12em] uppercase text-gold-300 hover:text-gold-200">
+        @aliskapsalon op Instagram →
+      </a>
+    </div>
+
+    <div class="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5 auto-rows-[160px] sm:auto-rows-[220px]">
+      <div class="fade-up img-treat rounded-2xl overflow-hidden row-span-2 border border-gold-500/10 shadow-card">
+        <img src="images/gallery-1.jpeg" class="w-full h-full object-cover" alt="Verse fade in de zaak">
+      </div>
+      <div class="fade-up img-treat rounded-2xl overflow-hidden border border-gold-500/10 shadow-card" style="transition-delay:.05s">
+        <img src="images/gallery-5.jpeg" class="w-full h-full object-cover" alt="Fade met volle baard">
+      </div>
+      <div class="fade-up img-treat rounded-2xl overflow-hidden border border-gold-500/10 shadow-card" style="transition-delay:.1s">
+        <img src="images/gallery-3.jpeg" class="w-full h-full object-cover" alt="Kinderkapsel met lijntekening">
+      </div>
+      <div class="fade-up img-treat rounded-2xl overflow-hidden row-span-2 border border-gold-500/10 shadow-card" style="transition-delay:.15s">
+        <img src="images/shopfront.jpeg" class="w-full h-full object-cover" alt="De gevel van Ali's Kapsalon">
+      </div>
+      <div class="fade-up img-treat rounded-2xl overflow-hidden border border-gold-500/10 shadow-card" style="transition-delay:.2s">
+        <img src="images/ali-portrait.png" class="w-full h-full object-cover" alt="Ali aan het werk in de zaak">
+      </div>
+      <div class="fade-up img-treat rounded-2xl overflow-hidden border border-gold-500/10 shadow-card" style="transition-delay:.25s">
+        <img src="images/gallery-2.jpeg" class="w-full h-full object-cover" alt="Scherpe scheiding, netjes afgewerkt">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section id="reviews" class="relative py-28 sm:py-36 bg-ink-800/60 border-y border-gold-900/30 noise">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="text-center fade-up">
+      <span class="font-label text-[11px] tracking-[0.3em] uppercase text-gold-400">Wat Men Zegt</span>
+      <h2 class="font-display font-800 text-4xl sm:text-5xl mt-4 text-cream-50">Vaste Klanten Aan het Woord</h2>
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="fade-up card-rise rounded-2xl border border-gold-500/15 bg-ink-900/50 p-7">
+        <div class="flex gap-1 text-gold-400 mb-4">★★★★★</div>
+        <p class="text-cream-200/85 leading-relaxed">"Beste fade die ik ooit in Tilburg heb gehad, zonder twijfel. Ali luistert eerst echt voordat hij de tondeuse pakt."</p>
+        <div class="flex items-center gap-3 mt-6">
+          <img src="https://placehold.co/80x80/D7A301/0B0A08?text=R" class="w-10 h-10 rounded-full">
+          <div>
+            <p class="font-label text-sm tracking-wide text-cream-50">Rowan V.</p>
+            <p class="text-xs text-cream-200/50">Google Review</p>
+          </div>
+        </div>
+      </div>
+      <div class="fade-up card-rise rounded-2xl border border-gold-500/15 bg-ink-900/50 p-7" style="transition-delay:.08s">
+        <div class="flex gap-1 text-gold-400 mb-4">★★★★★</div>
+        <p class="text-cream-200/85 leading-relaxed">"Alleen al de hot towel-scheerbeurt is het waard. Nette zaak, vriendelijk team, nooit lang wachten."</p>
+        <div class="flex items-center gap-3 mt-6">
+          <img src="https://placehold.co/80x80/8A6A01/F4EEE0?text=M" class="w-10 h-10 rounded-full">
+          <div>
+            <p class="font-label text-sm tracking-wide text-cream-50">Milan D.</p>
+            <p class="text-xs text-cream-200/50">Google Review</p>
+          </div>
+        </div>
+      </div>
+      <div class="fade-up card-rise rounded-2xl border border-gold-500/15 bg-ink-900/50 p-7" style="transition-delay:.16s">
+        <div class="flex gap-1 text-gold-400 mb-4">★★★★★</div>
+        <p class="text-cream-200/85 leading-relaxed">"De eerste echte knipbeurt van mijn zoon en ze hadden zo veel geduld met hem. Nu gaan we nergens anders meer heen."</p>
+        <div class="flex items-center gap-3 mt-6">
+          <img src="https://placehold.co/80x80/17140f/D7A301?text=S" class="w-10 h-10 rounded-full">
+          <div>
+            <p class="font-label text-sm tracking-wide text-cream-50">Sanne K.</p>
+            <p class="text-xs text-cream-200/50">Google Review</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VISIT / CONTACT ============ -->
+<section id="visit" class="relative py-28 sm:py-36 noise radial-gold-2">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-2 gap-14">
+    <div class="fade-up">
+      <span class="font-label text-[11px] tracking-[0.3em] uppercase text-gold-400">Bezoek Ons</span>
+      <h2 class="font-display font-800 text-4xl sm:text-5xl mt-4 leading-[1.05] text-cream-50">
+        Neem Plaats<br>aan de Besterdring
+      </h2>
+      <div class="hairline w-24 my-7"></div>
+
+      <div class="space-y-6">
+        <div class="flex items-start gap-4">
+          <span class="w-11 h-11 rounded-full border border-gold-500/40 grid place-items-center shrink-0 bg-ink-800">
+            <svg class="w-4.5 h-4.5 text-gold-400" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-6.5 7-11a7 7 0 10-14 0c0 4.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          </span>
+          <div>
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=Besterdring+49%2C+5014+HH+Tilburg" target="_blank" rel="noopener" class="text-cream-50 font-medium hover:text-gold-300 transition-colors">Besterdring 49, 5014 HH Tilburg</a>
+            <p class="text-cream-200/60 text-sm">Nederland</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <span class="w-11 h-11 rounded-full border border-gold-500/40 grid place-items-center shrink-0 bg-ink-800">
+            <svg class="w-4.5 h-4.5 text-gold-400" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3M12 21a9 9 0 100-18 9 9 0 000 18z"/></svg>
+          </span>
+          <div>
+            <p class="text-cream-50 font-medium">Di – Za, 9:00 – 18:00</p>
+            <p class="text-cream-200/60 text-sm">Gesloten op zondag &amp; maandag</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <span class="w-11 h-11 rounded-full border border-gold-500/40 grid place-items-center shrink-0 bg-ink-800">
+            <svg class="w-4.5 h-4.5 text-gold-400" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+          </span>
+          <div>
+            <a href="https://www.instagram.com/aliskapsalon/" target="_blank" rel="noopener" class="text-cream-50 font-medium hover:text-gold-300 transition-colors">@aliskapsalon</a>
+            <p class="text-cream-200/60 text-sm">Volg ons voor verse kapsels &amp; beschikbaarheid</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <span class="w-11 h-11 rounded-full border border-gold-500/40 grid place-items-center shrink-0 bg-ink-800">
+            <svg class="w-4.5 h-4.5 text-gold-400" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6.5v11a2 2 0 002 2h14a2 2 0 002-2v-11M3 6.5a2 2 0 012-2h14a2 2 0 012 2M3 6.5l9 6.5 9-6.5"/></svg>
+          </span>
+          <div>
+            <a href="mailto:Ali_emir_kaplan@hotmail.com" class="text-cream-50 font-medium hover:text-gold-300 transition-colors">Ali_emir_kaplan@hotmail.com</a>
+            <p class="text-cream-200/60 text-sm">Vragen? Stuur ons een e-mail</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-10 flex items-center gap-4">
+        <a href="https://www.instagram.com/aliskapsalon/" target="_blank" rel="noopener" class="btn-primary w-11 h-11 rounded-full border border-cream-100/20 grid place-items-center hover:border-gold-400 hover:text-gold-300">
+          <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+        </a>
+        <a href="https://www.facebook.com/people/Alis-kapsalon/100063524110757/" target="_blank" rel="noopener" class="btn-primary w-11 h-11 rounded-full border border-cream-100/20 grid place-items-center hover:border-gold-400 hover:text-gold-300">
+          <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 9h3V6h-3a3 3 0 00-3 3v2H8v3h3v6h3v-6h3l1-3h-4V9a1 1 0 011-1z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="fade-up card-rise rounded-3xl border border-gold-500/15 bg-ink-800/60 p-8 sm:p-10 shadow-card" style="transition-delay:.1s">
+      <h3 class="font-display text-2xl font-700 text-cream-50 mb-1">Vraag een Afspraak Aan</h3>
+      <p class="text-cream-200/60 text-sm mb-7">We bevestigen uw afspraak telefonisch of via Instagram DM.</p>
+      <form class="space-y-5" onsubmit="event.preventDefault(); this.querySelector('.form-success').classList.remove('hidden');">
+        <div>
+          <label class="font-label text-[11px] tracking-[0.12em] uppercase text-cream-200/60">Naam</label>
+          <input type="text" required placeholder="Uw naam" class="mt-2 w-full bg-ink-900/70 border border-cream-100/15 focus:border-gold-400 rounded-xl px-4 py-3 text-cream-50 placeholder:text-cream-200/30 outline-none transition-colors">
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="font-label text-[11px] tracking-[0.12em] uppercase text-cream-200/60">Telefoon</label>
+            <input type="tel" required placeholder="06 12 34 56 78" class="mt-2 w-full bg-ink-900/70 border border-cream-100/15 focus:border-gold-400 rounded-xl px-4 py-3 text-cream-50 placeholder:text-cream-200/30 outline-none transition-colors">
+          </div>
+          <div>
+            <label class="font-label text-[11px] tracking-[0.12em] uppercase text-cream-200/60">Dienst</label>
+            <select class="mt-2 w-full bg-ink-900/70 border border-cream-100/15 focus:border-gold-400 rounded-xl px-4 py-3 text-cream-50 outline-none transition-colors">
+              <option>Knippen — €25</option>
+              <option>Knippen + Wassen — €30</option>
+              <option>Knippen + Baard — €30</option>
+              <option>Knippen + Epileren — €27.50</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="font-label text-[11px] tracking-[0.12em] uppercase text-cream-200/60">Gewenste Dag &amp; Tijd</label>
+          <input type="text" placeholder="bijv. zaterdagmiddag" class="mt-2 w-full bg-ink-900/70 border border-cream-100/15 focus:border-gold-400 rounded-xl px-4 py-3 text-cream-50 placeholder:text-cream-200/30 outline-none transition-colors">
+        </div>
+        <button type="submit" class="btn-primary w-full bg-gold-500 text-ink-900 font-label font-semibold text-sm tracking-[0.1em] uppercase px-7 py-4 rounded-xl shadow-gold-sm hover:bg-gold-400">
+          Verstuur Aanvraag
+        </button>
+        <p class="form-success hidden text-center text-gold-300 text-sm">Bedankt — we nemen binnenkort contact op ter bevestiging.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="relative pt-20 pb-10 border-t border-gold-900/30 noise">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <span class="grid place-items-center w-10 h-10 rounded-full border border-gold-500/50 bg-ink-800 overflow-hidden">
+            <img src="images/logo.jpeg" alt="Ali's Kapsalon logo" class="w-full h-full object-cover">
+          </span>
+          <span class="font-display text-lg font-800 text-cream-50">Ali's Kapsalon</span>
+        </div>
+        <p class="text-cream-200/60 text-sm leading-relaxed max-w-xs">Knippen &amp; scheren aan de Besterdring 49, 5014 HH Tilburg. Precieze kapsels, eerlijke prijzen, geen haast.</p>
+      </div>
+
+      <div>
+        <p class="font-label text-[11px] tracking-[0.2em] uppercase text-gold-400 mb-4">Verkennen</p>
+        <ul class="space-y-3 text-sm text-cream-200/70">
+          <li><a href="#services" class="hover:text-gold-300 transition-colors">Diensten &amp; Prijzen</a></li>
+          <li><a href="#about" class="hover:text-gold-300 transition-colors">Over de Zaak</a></li>
+          <li><a href="#gallery" class="hover:text-gold-300 transition-colors">Galerij</a></li>
+          <li><a href="#reviews" class="hover:text-gold-300 transition-colors">Reviews</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="font-label text-[11px] tracking-[0.2em] uppercase text-gold-400 mb-4">Bezoek</p>
+        <ul class="space-y-3 text-sm text-cream-200/70">
+          <li>Besterdring 49, 5014 HH Tilburg</li>
+          <li>Di – Za · 9:00–18:00</li>
+          <li>Gesloten zo &amp; ma</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="font-label text-[11px] tracking-[0.2em] uppercase text-gold-400 mb-4">Volg Ons</p>
+        <div class="flex items-center gap-3">
+          <a href="https://www.instagram.com/aliskapsalon/" target="_blank" rel="noopener" class="btn-primary w-10 h-10 rounded-full border border-cream-100/20 grid place-items-center hover:border-gold-400 hover:text-gold-300">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+          </a>
+          <a href="https://www.facebook.com/people/Alis-kapsalon/100063524110757/" target="_blank" rel="noopener" class="btn-primary w-10 h-10 rounded-full border border-cream-100/20 grid place-items-center hover:border-gold-400 hover:text-gold-300">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 9h3V6h-3a3 3 0 00-3 3v2H8v3h3v6h3v-6h3l1-3h-4V9a1 1 0 011-1z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hairline my-10"></div>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-cream-200/40">
+      <p>© <span id="year"></span> Ali's Kapsalon, Tilburg. Alle rechten voorbehouden.</p>
+      <p class="font-label tracking-[0.15em] uppercase">Knippen &amp; Scheren</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => {
+    const isOpen = !mobileMenu.classList.contains('hidden');
+    mobileMenu.classList.toggle('hidden');
+    menuBtn.setAttribute('aria-expanded', String(!isOpen));
+  });
+  document.querySelectorAll('.mobile-link').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
